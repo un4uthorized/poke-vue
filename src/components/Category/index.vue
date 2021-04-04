@@ -8,7 +8,7 @@
 
 <script lang='ts'>
 import { onMounted } from 'vue';
-import colors from '../context/colors';
+import colors from '../../context/colors';
 
 export default ({
   name: 'Category',

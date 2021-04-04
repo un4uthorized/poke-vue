@@ -23,7 +23,7 @@
 <script lang='ts'>
 
 import { onMounted, ref } from 'vue';
-import Category from '../components/category.vue';
+import Category from '../components/Category/index.vue';
 import req from '../utils/api';
 
 export default ({
