@@ -10,11 +10,11 @@
         </header>
         <div class="categories">
           <template v-for="(category, index) in categories" :key="category.name">
-            <template v-if="index < 4">
-              <Category :name="category.name"/>
+            <template v-if="index < previewCateories">
+              <Category :name="category.name" :color="category.name"/>
             </template>
           </template>
-          <Category name="others"/>
+          <Category @click="() => previewCateories = categories.length" name="others" color="others"/>
         </div>
       </div>
     </div>
@@ -34,16 +34,25 @@ export default ({
 
   setup(): unknown {
     const categories = ref([]);
+    const pokemons = ref([]);
+    const previewCateories = ref(5);
+
     const getCategories = async () => {
       const response = await req.get('type').then((res) => res.data.results);
       return response;
     };
 
+    const getPokemons = async () => {
+      const response = await req.get('pokemon?limit=100&offset=200').then((res) => res.data.results);
+      return response;
+    };
+
     onMounted(async () => {
       categories.value = await getCategories();
+      pokemons.value = await getPokemons();
     });
 
-    return { categories };
+    return { categories, previewCateories, pokemons };
   },
 });
 </script>
@@ -75,7 +84,7 @@ export default ({
 .categories{
   margin-top: 20px;
   display: flex;
-  padding: 10px;
+  justify-content: flex-end;
   flex-wrap: wrap;
 }
 
