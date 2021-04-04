@@ -22,7 +22,7 @@ export default ({
 });
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
 .card{
     width: 45%;
     border-radius: 10px;

@@ -11,7 +11,7 @@
         <div class="categories">
           <template v-for="(category, index) in categories" :key="category.name">
             <template v-if="index < previewCateories">
-              <Category :name="category.name" :color="category.name"/>
+              <Category @click="getPokemonsByType(index)" :name="category.name" :color="category.name"/>
             </template>
           </template>
           <Category @click="() => previewCateories < 6 ? previewCateories = categories.length : previewCateories = 5" :name="previewCateories > 6 ? 'hidden':'show more'" color="more"/>
@@ -40,6 +40,10 @@ import PokeCard from '../components/PokeCard/index.vue';
 
 import req from '../utils/api';
 
+interface PokemonByType{
+  pokemon: Array<unknown>,
+}
+
 export default ({
   name: 'Pokedex',
   components: {
@@ -49,7 +53,7 @@ export default ({
 
   setup(): unknown {
     const categories = ref([]);
-    const pokemons = ref([]);
+    const pokemons = ref();
     const previewCateories = ref(5);
 
     const router = useRouter();
@@ -60,8 +64,14 @@ export default ({
     };
 
     const getPokemons = async () => {
-      const response = await req.get('pokemon?limit=100').then((res) => res.data.results);
+      const response = await req.get('pokemon?limit=200').then((res) => res.data.results);
       return response;
+    };
+
+    const getPokemonsByType = async (id: string | number) => {
+      const pokemonsByType = await req.get(`type/${Number(id) + 1}`).then((res) => res.data.pokemon);
+      const aux = [].map.call(pokemonsByType, (el: PokemonByType) => el.pokemon);
+      pokemons.value = aux;
     };
 
     const extractIdFromUrl = (url: string): string => {
@@ -75,13 +85,13 @@ export default ({
     });
 
     return {
-      categories, previewCateories, pokemons, extractIdFromUrl, router,
+      categories, previewCateories, pokemons, extractIdFromUrl, router, getPokemonsByType,
     };
   },
 });
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
 .pokedex {
   height: 100vh;
   margin: 0 auto;
