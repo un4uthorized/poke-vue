@@ -14,7 +14,7 @@
               <Category :name="category.name" :color="category.name"/>
             </template>
           </template>
-          <Category @click="() => previewCateories = categories.length" name="more" color="more"/>
+          <Category @click="() => previewCateories < 6 ? previewCateories = categories.length : previewCateories = 5" :name="previewCateories > 6 ? 'hidden':'show more'" color="more"/>
         </div>
         <header>
           <div>
@@ -25,7 +25,7 @@
       </div>
       <div class="pokemons">
           <template v-for="pokemon in pokemons" :key="pokemon.name">
-            <PokeCard :name="pokemon.name" :image="extractImageByUrl(pokemon.url)" />
+            <PokeCard :showPokemon="() => router.push(`/pokemon/${extractIdFromUrl(pokemon.url)}`)" :name="pokemon.name" :image="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${extractIdFromUrl(pokemon.url)}.gif`" />
           </template>
         </div>
     </div>
@@ -34,6 +34,7 @@
 <script lang='ts'>
 
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Category from '../components/Category/index.vue';
 import PokeCard from '../components/PokeCard/index.vue';
 
@@ -51,6 +52,8 @@ export default ({
     const pokemons = ref([]);
     const previewCateories = ref(5);
 
+    const router = useRouter();
+
     const getCategories = async () => {
       const response = await req.get('type').then((res) => res.data.results);
       return response;
@@ -61,9 +64,9 @@ export default ({
       return response;
     };
 
-    const extractImageByUrl = (url: string): string => {
+    const extractIdFromUrl = (url: string): string => {
       const id = url.split('/').slice(-2)[0];
-      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`;
+      return id;
     };
 
     onMounted(async () => {
@@ -72,7 +75,7 @@ export default ({
     });
 
     return {
-      categories, previewCateories, pokemons, extractImageByUrl,
+      categories, previewCateories, pokemons, extractIdFromUrl, router,
     };
   },
 });

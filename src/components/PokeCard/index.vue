@@ -2,12 +2,11 @@
     <div class='card animate__bounceIn'>
      <span>{{name}}</span>
      <img :src="image"/>
-     <button><i class="gg-arrow-right"></i></button>
+     <button @click="() => showPokemon()"><i class="gg-arrow-right"></i></button>
     </div>
 </template>
 
 <script lang='ts'>
-import { onMounted } from 'vue';
 import colors from '../../context/colors';
 
 export default ({
@@ -15,6 +14,7 @@ export default ({
   props: {
     name: String,
     image: String,
+    showPokemon: Function,
   },
   setup(props: unknown): unknown {
     return { props, colors };
@@ -34,6 +34,8 @@ export default ({
     transition: ease-out .8s;
     cursor: pointer;
     position: relative;
+          user-select: none;
+
     &:hover{
       transform: scale(1.1);
     }

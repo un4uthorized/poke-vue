@@ -6,6 +6,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Home',
     component: () => import('../views/Pokedex.vue'),
   },
+  {
+    path: '/pokemon/:id?',
+    name: 'Pokemon',
+    component: () => import('../views/Pokemon.vue'),
+  },
 ];
 
 const router = createRouter({
