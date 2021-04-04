@@ -1,6 +1,8 @@
 <template>
     <div class='card animate__bounceIn'>
      <span>{{name}}</span>
+     <img :src="image"/>
+     <button><i class="gg-arrow-right"></i></button>
     </div>
 </template>
 
@@ -22,16 +24,61 @@ export default ({
 
 <style lang='scss'>
 .card{
-    border: solid 1px #0000001a;
     width: 45%;
     border-radius: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-family: 'Poppins';
     height: 100px;
-    transition: ease-out .5s;
+    background-color: #fff;
+    box-shadow: 4px 4px 5px #00000011;
+    transition: ease-out .8s;
     cursor: pointer;
+    position: relative;
     &:hover{
-      transform: scale(0.9);
+      transform: scale(1.1);
+    }
+    img{
+      position: absolute;
+      width: 75px;
+      left: -10px;
+      top: -10px
+    }
+    span{
+      text-transform: uppercase;
+      font-family: 'Poppins';
+      font-weight: bold;
+      font-size: 25px;
+      word-break: break-word;
+      position: absolute;
+      width: 80%;
+      line-height: 22.5px;
+      bottom: 5px;
+      left: 10px;
+      opacity: .2;
+    }
+    button{
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      border: none;
+      padding: 4px;
+      background-color: #000000;
+      box-shadow: 4px 4px 10px #4286f455;
+      border-radius: 8px;
+      transition: ease .5s;
+      cursor: pointer;
+      &:hover{
+        background-color: transparent;
+        box-shadow: none;
+        border: solid 1px black;
+        i{
+          color: black;
+        }
+      }
+      i{
+        transform: scale(.5);
+        color: white;
+      }
     }
 }
 </style>

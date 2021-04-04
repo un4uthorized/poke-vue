@@ -22,12 +22,12 @@
             <span>List of pokemons.</span>
           </div>
         </header>
-        <div class="pokemons">
+      </div>
+      <div class="pokemons">
           <template v-for="pokemon in pokemons" :key="pokemon.name">
             <PokeCard :name="pokemon.name" :image="extractImageByUrl(pokemon.url)" />
           </template>
         </div>
-      </div>
     </div>
 </template>
 
@@ -63,7 +63,7 @@ export default ({
 
     const extractImageByUrl = (url: string): string => {
       const id = url.split('/').slice(-2)[0];
-      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${id}.gif`;
     };
 
     onMounted(async () => {
@@ -86,6 +86,8 @@ export default ({
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0px 0px 20px #0000000a;
+  display: flex;
+  flex-direction: column;
 }
 
 .title{
@@ -112,10 +114,14 @@ export default ({
 .pokemons{
   overflow-y: scroll;
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 3vh;
-  max-height: 64vh;
+  padding: 20px;
+  margin-top: 1vh;
+  background-color: #e0e0e0;
+  border-radius: 0px 0px 20px 20px;
+  box-shadow: 0px 5px 10px #0000000a;
 }
 
 .pokemons::-webkit-scrollbar {
@@ -143,8 +149,8 @@ header{
   padding: 15px;
   border: none;
   border-radius: 10px;
-  background: #4286f4;
-  box-shadow: 5px 5px 20px #4286f455;
+  background: #000000;
+  box-shadow: 5px 5px 20px #00000055;
   cursor: pointer;
   outline: 0;
   i{
