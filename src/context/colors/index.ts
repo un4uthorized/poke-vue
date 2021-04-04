@@ -2,8 +2,8 @@ const colors = {
   normal: '#4286f4',
   fighting: '#4ebb93',
   flying: '#ff9800',
-  poison: '#3f51b5',
-  ground: '#795548',
+  poison: '#7587e6',
+  ground: '#c58b76',
   rock: '#838384',
   bug: '#009688',
   ghost: '#4b00fb',
@@ -19,7 +19,7 @@ const colors = {
   fairy: '#e91e63',
   unknown: '#9e9e9e',
   shadow: '#000',
-  others: '#000',
+  more: '#75e0e6',
 };
 
 export default colors;

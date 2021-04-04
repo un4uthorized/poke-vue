@@ -7,7 +7,6 @@
 </template>
 
 <script lang='ts'>
-import { onMounted } from 'vue';
 import colors from '../../context/colors';
 
 export default ({
@@ -17,9 +16,6 @@ export default ({
     color: String,
   },
   setup(props: unknown): unknown {
-    onMounted(() => {
-      console.log(props);
-    });
     return { props, colors };
   },
 });
@@ -28,7 +24,7 @@ export default ({
 <style lang='scss'>
 .category{
     margin-left: 10px;
-    margin-top: 10px;
+    margin-top: 15px;
     span{
         color: black;
         font-family: Poppins;
@@ -36,7 +32,7 @@ export default ({
         color: white;
         font-weight: normal;
         border-radius: 5px;
-        padding: 5px 10px;
+        padding: 5px 15px;
         cursor: pointer;
         user-select: none;
     }

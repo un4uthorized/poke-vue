@@ -14,7 +14,18 @@
               <Category :name="category.name" :color="category.name"/>
             </template>
           </template>
-          <Category @click="() => previewCateories = categories.length" name="others" color="others"/>
+          <Category @click="() => previewCateories = categories.length" name="more" color="more"/>
+        </div>
+        <header>
+          <div>
+            <h2 class="title"><a href="#">Pokemons</a></h2>
+            <span>List of pokemons.</span>
+          </div>
+        </header>
+        <div class="pokemons">
+          <template v-for="pokemon in pokemons" :key="pokemon.name">
+            <PokeCard :name="pokemon.name" :image="extractImageByUrl(pokemon.url)" />
+          </template>
         </div>
       </div>
     </div>
@@ -24,12 +35,15 @@
 
 import { onMounted, ref } from 'vue';
 import Category from '../components/Category/index.vue';
+import PokeCard from '../components/PokeCard/index.vue';
+
 import req from '../utils/api';
 
 export default ({
   name: 'Pokedex',
   components: {
     Category,
+    PokeCard,
   },
 
   setup(): unknown {
@@ -43,8 +57,13 @@ export default ({
     };
 
     const getPokemons = async () => {
-      const response = await req.get('pokemon?limit=100&offset=200').then((res) => res.data.results);
+      const response = await req.get('pokemon?limit=100').then((res) => res.data.results);
       return response;
+    };
+
+    const extractImageByUrl = (url: string): string => {
+      const id = url.split('/').slice(-2)[0];
+      return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
     };
 
     onMounted(async () => {
@@ -52,7 +71,9 @@ export default ({
       pokemons.value = await getPokemons();
     });
 
-    return { categories, previewCateories, pokemons };
+    return {
+      categories, previewCateories, pokemons, extractImageByUrl,
+    };
   },
 });
 </script>
@@ -78,7 +99,7 @@ export default ({
 }
 
 .container{
-  padding: 40px 30px;
+  padding: 10px 30px;
 }
 
 .categories{
@@ -88,12 +109,26 @@ export default ({
   flex-wrap: wrap;
 }
 
+.pokemons{
+  overflow-y: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 3vh;
+  max-height: 64vh;
+}
+
+.pokemons::-webkit-scrollbar {
+  display: none;
+}
+
 .categories::-webkit-scrollbar {
   display: none;
 }
 
 header{
   display: flex;
+  margin-top: 30px;
   justify-content: space-between;
   align-items: center;
   span {
